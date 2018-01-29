@@ -1,0 +1,50 @@
+\section{Integer Linear Programming Model}
+	\subsection{Network Flow Model Representation}
+		The problem can be represented on a complete weighted graph $G=(N, A)$ where $N$ is the set of nodes (holes on the board) and $A$ is the set of the arcs $(i, j), ∀ i, j ∈ N$ (trajectory of the drill moving from hole $i$ to hole $j$).To each arc will be associated a weight $c_{ij}$ that represents the time needed to move from starting hole to destination.\\
+		Using this representation the problem is equivalent to determine the minimum weight hamiltonian cycle on G, so it is like the very popular Travelling Salesman Problem (TSP).\\
+		To solve the TSP problem we can formulate it as a network flow model on G. Given a starting node $0 ∈ N$, let $|N|$ be the amount of its output flow, the problem can be solved by finding the path for which:
+		\begin{itemize}
+			\item Each node receives 1 unit of flow
+			\item Each node is visited once
+			\item The sum of costs in selected arcs is minimum
+		\end{itemize}
+		
+	\subsection{Variables and Constraints}
+		The problem can then be represented like this:\\
+		\newline
+		\textbf{SETS:}\\
+		\begin{addmargin}[2em]{0em}
+			$N$ = the graph nodes (holes)\\
+			$A$ = arcs in the form $(i, j), ∀ i, j ∈ N$ (trajectories between holes)\\
+		\end{addmargin}
+		\textbf{PARAMETERS:}\\
+		\begin{addmargin}[2em]{0em}
+			$c_{ij}$ = time taken by the drill to move from $i$ to $j$, $∀ (i, j) ∈ A$
+			$0$ = starting hole, $0 ∈ N$\\
+		\end{addmargin}
+		\textbf{DECISION VARIABLES:}\\
+		\begin{addmargin}[2em]{0em}
+			$x_{ij}$ = amount of the flow shipped from $i$ to $j$, $∀ (i, j) ∈ A$
+			$y_{ij}$ = 1 if arc $(i, j)$ ships some flow, 0 otherwise, $∀ (i, j) ∈ A$\\
+		\end{addmargin}
+		\textbf{OBJECTIVE FUNCTION:}\\
+		\[min \sum_{i, j | (i, j) ∈ A} c_{ij} \cdot y_{ij}\]\\
+		\textbf{CONSTRAINTS:}
+		\begin{align*}
+			&\sum_{j | (0,j) ∈ A} x_{0j} = |N|\\
+			\\
+			&\sum_{i | (i, k) ∈ A} x_{ik} - \sum_{j | (k, j) ∈ A} x_{kj} = 1 & ∀ k ∈ N \setminus \{0\}\\
+			\\
+			&\sum_{j | (i, j) ∈ A} y_{ij} = 1 & ∀ i ∈ N\\
+			\\
+			&\sum_{i | (i, j) ∈ A} y_{ij} = 1 & ∀ j ∈ N\\
+			\\
+			&x_{ij} \leq |N| \cdot y_{ij} & ∀ (i, j) ∈ A\\
+			\\
+			&x_{ij} ∈ \mathbb{Z}_{+} & ∀ (i, j) ∈ A\\
+			\\
+			&y_{ij} ∈ \{0, 1\} & ∀ (i, j) ∈ A\\
+		\end{align*}
+
+		
+		

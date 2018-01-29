@@ -5,24 +5,21 @@
 \usepackage{setspace} % line height
 \usepackage{fancyhdr} % header and footer customization
 \usepackage{hyperref} % link menu
-\usepackage{csquotes}
-
-\setlength{\parindent}{0pt}
-\tolerance=9999
+\usepackage{csquotes} % quotations
+\usepackage{scrextend} % text indentation
+\usepackage{amsmath} % formulas alignment
+\usepackage{amsfonts} % math symbols
 
 \pagestyle{fancy}
 \onehalfspacing
-\setlength{\headheight}{15pt}
+
 
 \begin{document}
 
 \include{front}
-
-\newpage
 \tableofcontents
-
 \include{sections/abstract}
-%\include{sections/ilp_model}
+\include{sections/ilp_model}
 %\include{sections/meta_heuristic}
 %\include{sections/tests}
 %\include{sections/comparison}
