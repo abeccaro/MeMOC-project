@@ -29,9 +29,16 @@ public:
     unsigned long size() const;
     
     /**
-     * Random access operator redefinition
+     * Random access operator redefinitions
      */
+    const tsp_solution& operator[](unsigned long index) const;
     tsp_solution& operator[](unsigned long index);
+    
+    /** 
+     * Output stream operator
+     * @param pop The population to output
+     */
+    friend std::ostream& operator<<(std::ostream& os, const tsp_population& pop);
     
     /**
      * Evaluates all the solutions and sorts them

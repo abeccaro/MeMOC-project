@@ -23,10 +23,11 @@ tsp_solution::tsp_solution(const tsp_solution& sol) : fit(sol.fit) {
         sequence.push_back(sol.sequence[i]);
 }
 
-void tsp_solution::print() const {
-    for (int i = 0; i < sequence.size(); i++)
-        std::cout << sequence[i] << " ";
-	std::cout << std::endl;
+std::ostream& operator<<(std::ostream& os, const tsp_solution& sol) {
+    os << "[ ";
+    for (int i = 0; i < sol.sequence.size(); i++)
+        os << sol.sequence[i] << " ";
+	return os << "] fit = " << sol.fit;
 }
 
 unsigned long tsp_solution::size() const {

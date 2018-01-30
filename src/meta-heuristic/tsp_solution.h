@@ -51,6 +51,12 @@ public:
      * @param rhs The solution to compare
      */
     bool operator<(const tsp_solution& rhs);
+    
+    /** 
+     * Output stream operator
+     * @param sol The solution to output
+     */
+    friend std::ostream& operator<<(std::ostream& os, const tsp_solution& sol);
 
 	/**
 	 * Evaluate this solution fitness and updates value

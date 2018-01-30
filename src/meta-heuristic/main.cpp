@@ -21,9 +21,5 @@ int main (int argc, char const *argv[]) {
 	//evaluate population
 	pop.evaluate(data.costs());
 	
-	std::cout << pop.size() << std::endl;
-	for (int i = 0; i < pop.size(); i++) {
-		pop[i].print();
-		std::cout << pop[i].fitness() << std::endl;
-	}
+	std::cout << pop;
 }
