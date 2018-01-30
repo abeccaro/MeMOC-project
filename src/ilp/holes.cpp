@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "cpxmacro.h"
+#include "../TSPData.h"
 
 using namespace std;
 
@@ -10,20 +11,14 @@ char errmsg[BUF_SIZE];
 const int NAME_SIZE = 512;
 char name[NAME_SIZE];
 
-// data
-const int N = 4;	// Number of nodes
-const int N0 = 0;	// Starting node index
-const double C[N*N] = {	0, 1.4, 3.2, 2.3,
-						1.4, 0, 2.7, 1.9,
-						3.2, 2.7, 0, 1.6,
-						2.3, 1.9, 1.6, 0 }; // c[i,j] linearized
 
-// optimal solution:
-// 0 -> 3 -> 2 -> 1 -> 0
-// 2.3 + 1.6 + 2.7 + 1.4 = 8
+void setupLP(CEnv env, Prob lp, const TSPData& data) {
+    const int N = data.size();
+    double C[N*N];
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < N; j++)
+            C[i*N+j] = data.cost(i,j);
 
-
-void setupLP(CEnv env, Prob lp) {
 	// x variables
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
@@ -125,31 +120,40 @@ int main (int argc, char const *argv[]) {
 		// init
 		DECL_ENV( env );
 		DECL_PROB( env, lp );
+		
+		// read input data
+		if (argc < 2)
+		    throw std::runtime_error("usage: ./main filename.dat");
+		TSPData data;
+		data.read(argv[1]);
+		
 		// setup LP
-		setupLP(env, lp);
+		std::cout << "Calculating..." << std::endl;
+		setupLP(env, lp, data);
+		
 		// optimize
 		CHECKED_CPX_CALL( CPXmipopt, env, lp );
+		
 		// print
 		double objval;
 		CHECKED_CPX_CALL( CPXgetobjval, env, lp, &objval );
-		std::cout << "Objval: " << objval << std::endl;
+		std::cout << std::endl << "Optimal objval: " << objval << std::endl;
+		
 		int n = CPXgetnumcols(env, lp);
-		if (n != 2*N*N) { throw std::runtime_error(std::string(__FILE__) + ":" + STRINGIZE(__LINE__) + ": " + "different number of variables"); }
+		if (n != 2 * data.size() * data.size())
+		    throw std::runtime_error(std::string(__FILE__) + ":" + STRINGIZE(__LINE__) + ": " + "different number of variables");
 	  	std::vector<double> varVals;
 		varVals.resize(n);
   		CHECKED_CPX_CALL( CPXgetx, env, lp, &varVals[0], 0, n - 1 );
 		/// status =      CPXgetx (env, lp, x          , 0, CPXgetnumcols(env, lp)-1);
-  		for ( int i = 0 ; i < n ; ++i ) {
-  	  		std::cout << "var in position " << i << " : " << varVals[i] << std::endl;
-  	  		/// to read variables names the API function ``CPXgetcolname'' may be used (it is rather tricky, see the API manual if you like...)
-  	  		/// status = CPXgetcolname (env, lp, cur_colname, cur_colnamestore, cur_storespace, &surplus, 0, cur_numcols-1);
-  		}
-		CHECKED_CPX_CALL( CPXsolwrite, env, lp, "ironrods.sol" );
+  	  		
+  	  	// output file.sol
+		CHECKED_CPX_CALL( CPXsolwrite, env, lp, "ilp.sol" );
+		
 		// free
 		CPXfreeprob(env, &lp);
 		CPXcloseCPLEX(&env);
-	}
-	catch(std::exception& e) {
+	} catch(std::exception& e) {
 		std::cout << ">>>EXCEPTION: " << e.what() << std::endl;
 	}
 

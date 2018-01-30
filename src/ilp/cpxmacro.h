@@ -1,7 +1,7 @@
 /**
  * @file cpx_macro.h
  * Cplex Helper Macros
- *
+ * This file was given as is
  */
 
 #ifndef CPX_MACRO_H
