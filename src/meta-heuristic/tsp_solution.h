@@ -45,6 +45,12 @@ public:
      * @param rhs The solution to assign
      */
     tsp_solution& operator=(const tsp_solution& rhs);
+    
+    /** 
+     * Less than operator
+     * @param rhs The solution to compare
+     */
+    bool operator<(const tsp_solution& rhs);
 
 	/**
 	 * Evaluate this solution fitness and updates value

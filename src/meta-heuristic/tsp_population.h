@@ -12,6 +12,11 @@ class tsp_population {
 private:
 	std::vector<tsp_solution> solutions;
 	
+	/**
+	 * Sorts solutions by fitness
+	 */
+	void sort_solutions();
+	
 public:
     /**
      * Random population
@@ -29,7 +34,7 @@ public:
     tsp_solution& operator[](unsigned long index);
     
     /**
-     * Evaluates all the solutions
+     * Evaluates all the solutions and sorts them
      */
     void evaluate(const std::vector<std::vector<double> >& costs);
 };

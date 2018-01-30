@@ -26,5 +26,4 @@ int main (int argc, char const *argv[]) {
 		pop[i].print();
 		std::cout << pop[i].fitness() << std::endl;
 	}
-		
 }

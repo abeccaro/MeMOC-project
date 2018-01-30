@@ -43,6 +43,10 @@ tsp_solution& tsp_solution::operator=(const tsp_solution& rhs) {
     return *this;
 }
 
+bool tsp_solution::operator<(const tsp_solution& rhs) {
+    return fit < rhs.fit;
+}
+
 void tsp_solution::evaluate(const std::vector<std::vector<double> >& costs) {
 	fit = 0;
 	
