@@ -62,6 +62,11 @@ public:
 	 * @return The fitness
 	 */
 	double fitness() const;
+	
+	/**
+	 * Creates a child from this solution reversing a substring
+	 */
+	tsp_solution crossover() const;
 };
 
 #endif

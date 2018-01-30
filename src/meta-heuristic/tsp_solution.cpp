@@ -55,3 +55,16 @@ void tsp_solution::evaluate(const std::vector<std::vector<double> >& costs) {
 double tsp_solution::fitness() const {
 	return fit;
 }
+
+tsp_solution tsp_solution::crossover() const {
+    tsp_solution child = *this;
+    
+    // starting index and length of reverse
+    int k = (double) rand() / RAND_MAX * (child.sequence.size() - 1);
+    int l = (double) rand() / RAND_MAX * (child.sequence.size() - k) + 1;
+    
+    std::reverse(child.sequence.begin() + k, child.sequence.begin() + k + l);
+    
+    return child;
+}
+
