@@ -15,10 +15,15 @@
 class TSPData {
 private:
     int n; //number of nodes
-    double infinite; // infinite value (an upper bound on the value of any feasible solution)
-    std::vector< std::vector<double> > costs;
+    std::vector<std::vector<double> > c; // costs
 
 public:
+    /**
+     * Infinite value (an upper bound on the value of any feasible solution)
+     */
+    static const double INFINITE;
+	
+	
     /**
      * Default constructor
      */
@@ -34,6 +39,11 @@ public:
      * Return nodes count
      */
     int size() const;
+    
+    /**
+     * Return costs matrix
+     */
+    std::vector<std::vector<double> > costs() const;
     
     /**
      * Return nodes count

@@ -16,10 +16,15 @@ int main (int argc, char const *argv[]) {
 	srand(time(0));
 
 	// creating first gen random population
-	tsp_population pop(data, 10);
+	tsp_population pop(data.size(), 10);
+	
+	//evaluate population
+	pop.evaluate(data.costs());
 	
 	std::cout << pop.size() << std::endl;
-	for (int i = 0; i < pop.size(); i++)
+	for (int i = 0; i < pop.size(); i++) {
 		pop[i].print();
+		std::cout << pop[i].fitness() << std::endl;
+	}
 		
 }

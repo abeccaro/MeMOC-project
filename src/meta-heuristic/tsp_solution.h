@@ -15,13 +15,14 @@
 class tsp_solution {
 private:
     std::vector<int> sequence;
+    double fit;
     
 public:
     /** Constructor 
      * build a random feasible solution
      * @param data instance data
      */
-    tsp_solution(const TSPData& data);
+    tsp_solution(int size);
     
     /** 
      * Copy constructor
@@ -44,6 +45,17 @@ public:
      * @param rhs The solution to assign
      */
     tsp_solution& operator=(const tsp_solution& rhs);
+
+	/**
+	 * Evaluate this solution fitness and updates value
+	 */
+	void evaluate(const std::vector<std::vector<double> >& costs);
+
+	/**
+	 * Gets this solution fitness
+	 * @return The fitness
+	 */
+	double fitness() const;
 };
 
 #endif

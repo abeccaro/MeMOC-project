@@ -16,7 +16,7 @@ public:
     /**
      * Random population
      */
-    tsp_population(const TSPData& data, int size);
+    tsp_population(int sol_size, int size);
     
     /**
      * Returns population size
@@ -27,6 +27,11 @@ public:
      * Random access operator redefinition
      */
     tsp_solution& operator[](unsigned long index);
+    
+    /**
+     * Evaluates all the solutions
+     */
+    void evaluate(const std::vector<std::vector<double> >& costs);
 };
 
 #endif

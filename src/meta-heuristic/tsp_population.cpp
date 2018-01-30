@@ -5,11 +5,11 @@
 
 #include "tsp_population.h"
 
-tsp_population::tsp_population(const TSPData& data, int size) {
+tsp_population::tsp_population(int sol_size, int size) {
 	solutions.reserve(size);
 	
 	for (int i = 0; i < size; i++)
-		solutions.push_back(tsp_solution(data));
+		solutions.push_back(tsp_solution(sol_size));
 }
 
 unsigned long tsp_population::size() const {
@@ -17,5 +17,10 @@ unsigned long tsp_population::size() const {
 }
 
 tsp_solution& tsp_population::operator[](unsigned long index) {
-        return solutions[index];
-    }
+    return solutions[index];
+}
+
+void tsp_population::evaluate(const std::vector<std::vector<double> >& costs) {
+	for (int i = 0; i < solutions.size(); i++)
+		solutions[i].evaluate(costs);
+}
