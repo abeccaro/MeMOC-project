@@ -67,6 +67,11 @@ public:
 	 * Creates a child from this solution reversing a substring
 	 */
 	tsp_solution crossover() const;
+	
+	/**
+	 * Mutates this solution
+	 */
+	void mutate();
 };
 
 #endif

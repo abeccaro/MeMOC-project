@@ -65,6 +65,25 @@ tsp_solution tsp_solution::crossover() const {
     
     std::reverse(child.sequence.begin() + k, child.sequence.begin() + k + l);
     
+    // solution may be unfeasible, forcing them to be feasible
+    if (child.sequence.front() != child.sequence.back()) {
+        if (k == 0) // first node changed but not last
+            child.sequence.back() = child.sequence.front();
+        else // last node changed but not first
+            child.sequence.front() = child.sequence.back();
+    }
+    
     return child;
+}
+
+void tsp_solution::mutate() {
+    int i = (double) rand() / RAND_MAX * (sequence.size()); // random sequence index
+    int j;
+    
+    do {
+       j = (double) rand() / RAND_MAX * (sequence.size());
+    } while (j == i);
+    
+    iter_swap(sequence.begin() + i, sequence.begin() + j);
 }
 
