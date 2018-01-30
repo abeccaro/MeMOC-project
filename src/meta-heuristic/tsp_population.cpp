@@ -42,3 +42,21 @@ void tsp_population::evaluate(const std::vector<std::vector<double> >& costs) {
 	
 	sort_solutions();
 }
+
+const tsp_solution& tsp_population::select() const {
+    // calculate sum of fitnesses
+    int sum = 0;
+    for (int i = 0; i < solutions.size(); i++)
+        sum += solutions[i].fitness();
+        
+    //extracting random element based on fitness
+    double rnd = (double)rand() / RAND_MAX * sum;
+    for (int i = 0; i < solutions.size(); i++) {
+        double f = solutions[i].fitness();
+        if (rnd < f)
+            return solutions[i];
+        rnd -= f;
+    }
+    // should never get here
+    return solutions[0];
+}

@@ -44,6 +44,11 @@ public:
      * Evaluates all the solutions and sorts them
      */
     void evaluate(const std::vector<std::vector<double> >& costs);
+    
+    /**
+     * Selects one random solution with probabilities proportional to fitness
+     */
+    const tsp_solution& select() const;
 };
 
 #endif

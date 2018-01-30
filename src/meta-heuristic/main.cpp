@@ -12,7 +12,7 @@ int main (int argc, char const *argv[]) {
 	TSPData data;
 	data.read(argv[1]);
 	
-	// setting random seed
+	// setting random seed (different every second)
 	srand(time(0));
 
 	// creating first gen random population
@@ -22,4 +22,7 @@ int main (int argc, char const *argv[]) {
 	pop.evaluate(data.costs());
 	
 	std::cout << pop;
+	
+	for (int i = 0; i < 10; i++)
+	    std::cout << pop.select() << std::endl;
 }
