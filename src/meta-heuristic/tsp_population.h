@@ -49,6 +49,13 @@ public:
      * Selects one random solution with probabilities proportional to fitness
      */
     const tsp_solution& select() const;
+    
+    /**
+     * Advance to next generation by selecting some parents, creating offsprings from them
+     * and replacing worst solutions with new ones
+     * @param ratio The survival ratio (1 means no new solutions, 0 means replace all)
+     */
+    void new_generation(double ratio);
 };
 
 #endif

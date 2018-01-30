@@ -5,7 +5,7 @@
 #include "tsp_solution.h"
 #include "tsp_population.h"
 
-const int GENERATIONS = 5;
+const int GENERATIONS = 100;
 const double SURVIVAL_RATIO = 0.25;
 
 int main (int argc, char const *argv[]) {
@@ -24,15 +24,14 @@ int main (int argc, char const *argv[]) {
 	//evaluate population
 	pop.evaluate(data.costs());
 	
+	std::cout << "Generation 0:" << std::endl;
 	std::cout << pop << std::endl;
 	
 	for (int i = 0; i < GENERATIONS; i++) {
-	    int n = pop.size() * (1 - SURVIVAL_RATIO);
-	    std::vector<tsp_solution> new_solutions(n, tsp_solution(data.size()));
-	    for (int j = 0; j < n; j++) {
-	        new_solutions[j] = pop.select().crossover();
-	        new_solutions[j].evaluate(data.costs());
-	        std::cout << new_solutions[j] << std::endl;
-	    }
+	    pop.new_generation(SURVIVAL_RATIO);
+	    pop.evaluate(data.costs());
+	    
+	    std::cout << "Generation " << i + 1 << ":" << std::endl;
+	    std::cout << pop << std::endl;
 	}
 }

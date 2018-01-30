@@ -55,3 +55,20 @@ const tsp_solution& tsp_population::select() const {
     double rnd = (double)rand() / RAND_MAX * solutions.size();
     return solutions[rnd];
 }
+
+void tsp_population::new_generation(double ratio) {
+    int n = solutions.size() * (1 - ratio);
+	std::vector<tsp_solution> new_solutions;
+	new_solutions.reserve(n);
+	
+	std::cout << n << std::endl;
+	
+	// generating new solutions
+	for (int i = 0; i < n; i++)
+	    new_solutions.push_back(select().crossover());
+	
+	// replacing worst solutions with new ones
+	int start_replace = solutions.size() - n;
+	for (int i = 0; i < n; i++)
+	    solutions[start_replace + i] = new_solutions[i];
+}
