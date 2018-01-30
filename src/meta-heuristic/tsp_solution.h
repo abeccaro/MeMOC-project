@@ -47,12 +47,6 @@ public:
     tsp_solution& operator=(const tsp_solution& rhs);
     
     /** 
-     * Less than operator
-     * @param rhs The solution to compare
-     */
-    bool operator<(const tsp_solution& rhs);
-    
-    /** 
      * Output stream operator
      * @param sol The solution to output
      */

@@ -41,11 +41,8 @@ tsp_solution& tsp_solution::operator=(const tsp_solution& rhs) {
     
     for (int i = 0; i < sequence.size(); i++)
         sequence[i] = rhs.sequence[i];
+    fit = rhs.fit;
     return *this;
-}
-
-bool tsp_solution::operator<(const tsp_solution& rhs) {
-    return fit < rhs.fit;
 }
 
 void tsp_solution::evaluate(const std::vector<std::vector<double> >& costs) {

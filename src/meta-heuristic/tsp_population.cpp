@@ -5,10 +5,17 @@
 
 #include "tsp_population.h"
 #include <algorithm>
+#include <iostream>
 
+// solution comparer, used to sort solution by fitness (desc)
+struct solution_comparer {
+    bool operator ()(const tsp_solution& a, const tsp_solution& b) const {
+        return a.fitness() > b.fitness();
+    }
+};
 
 void tsp_population::sort_solutions() {
-    std::sort(solutions.begin(), solutions.end());
+    std::sort(solutions.begin(), solutions.end(), solution_comparer());
 }
 
 
