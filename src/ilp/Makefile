@@ -6,7 +6,7 @@ CPX_INCDIR  = /opt/CPLEX_Studio/cplex/include
 CPX_LIBDIR  = /opt/CPLEX_Studio/cplex/lib/x86-64_linux/static_pic
 CPX_LDFLAGS = -lcplex -lm -pthread
 
-OBJ = holes.o ../TSPData.o
+OBJ = main.o ../TSPData.o
 
 %.o: %.cpp
 		$(CC) $(CPPFLAGS) -I$(CPX_INCDIR) -c $^ -o $@
