@@ -4,23 +4,29 @@
  */
  
 #include "TSPData.h"
+#include <iostream>
 
-TSPData::TSPData() : n(0) , infinite(1e10) {};
+const double TSPData::INFINITE = 1e10;
+
+TSPData::TSPData() : n(0) {};
 
 void TSPData::read(const char* filename) {
     std::ifstream in(filename);
+
     // read size
     in >> n;
+
     // read costs
-    costs.reserve(n);
+    c.reserve(n);
     for (int i = 0; i < n; i++) {
-        costs.reserve(n);
+        c.push_back(std::vector<double>(n));
         for (int j = 0; j < n; j++) {
-            double c;
-            in >> c;
-            costs[i].push_back(c);
+            double cost;
+            in >> cost;
+            c[i][j] = cost;
         }
     }
+
     in.close();
 }
 
@@ -28,6 +34,10 @@ int TSPData::size() const {
     return n;
 }
 
+std::vector<std::vector<double> > TSPData::costs() const {
+    return c;
+}
+
 double TSPData::cost(int i, int j) const {
-    return costs[i][j];
+    return c[i][j];
 }
