@@ -1,12 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <stdexcept>
 #include "../TSPData.h"
 #include "tsp_solution.h"
 #include "tsp_population.h"
 
-const int POPULATION_SIZE = 200;
-const int GENERATIONS = 200;
+const int POPULATION_SIZE = 500;
+const int GENERATIONS = 1000;
 const double SURVIVAL_RATIO = 0.1;
 const double MUTATION_CHANCE = 0.1;
 

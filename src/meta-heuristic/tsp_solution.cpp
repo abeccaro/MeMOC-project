@@ -77,13 +77,14 @@ tsp_solution tsp_solution::crossover() const {
 }
 
 void tsp_solution::mutate() {
-    int i = (double) rand() / RAND_MAX * (sequence.size()); // random sequence index
+    // indices in range [1, |nodes| - 1]
+    int i = 1 + rand() % (sequence.size() - 2); // random sequence index
     int j;
     
     do {
-       j = (double) rand() / RAND_MAX * (sequence.size());
+       j = 1 + rand() % (sequence.size() - 2);
     } while (j == i);
-    
+
     iter_swap(sequence.begin() + i, sequence.begin() + j);
 }
 
