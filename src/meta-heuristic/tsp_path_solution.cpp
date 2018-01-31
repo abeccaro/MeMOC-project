@@ -16,6 +16,8 @@ tsp_path_solution::tsp_path_solution(int size) : fit(TSPData::INFINITE) {
     std::random_shuffle(sequence.begin() + 1, sequence.end());
 }
 
+tsp_path_solution::tsp_path_solution(const std::vector<int>& path) : sequence(path), fit(TSPData::INFINITE) {}
+
 tsp_path_solution::tsp_path_solution(const tsp_path_solution& sol) : sequence(sol.sequence), fit(sol.fit) {}
 
 std::ostream& operator<<(std::ostream& os, const tsp_path_solution& sol) {
@@ -52,28 +54,55 @@ double tsp_path_solution::fitness() const {
 	return fit;
 }
 
-tsp_path_solution tsp_path_solution::crossover() const {
-    tsp_path_solution child = *this;
+// Implemented with Order Crossover (OX) algorithm
+tsp_path_solution tsp_path_solution::crossover(const tsp_path_solution& p2) const {
+    // indexes in range [1, |nodes| - 1] for cut point start and end
+    int start = 1 + rand() % (sequence.size() - 1);
+    int end;
     
-    // starting index and length of reverse
-    int k = 1 + rand() % (child.sequence.size() - 2);
-    int l = 1 + rand() % (child.sequence.size() - k - 1);
-    
-    std::reverse(child.sequence.begin() + k, child.sequence.begin() + k + l);
-    
-    // solution may be unfeasible, forcing them to be feasible
-    if (child.sequence.front() != child.sequence.back()) {
-        if (k == 0) // first node changed but not last
-            child.sequence.back() = child.sequence.front();
-        else // last node changed but not first
-            child.sequence.front() = child.sequence.back();
-    }
-    
-    return child;
+    do {
+       end = 1 + rand() % (sequence.size() - 1);
+    } while (end == start);
+
+    if (start > end)
+        std::swap(start, end);
+
+    std::vector<int> child_sequence(size(), -1);
+
+    // copy solution part between cut points
+    std::copy(sequence.begin() + start, sequence.begin() + end, child_sequence.begin() + start);
+
+    // getting remaining elements from p2 in order
+    int k = end;
+
+    // p2 after end
+    for (int i = end; i < p2.size(); i++)
+        // if sequence[start - end] doesn't contain p2[i]
+        if (std::find(sequence.begin() + start, sequence.begin() + end, p2.sequence[i]) == sequence.begin() + end) {
+            child_sequence[k] = p2.sequence[i];
+            k++;
+        }
+
+    // p2 before start
+    for (int i = 0; i < end; i++)
+        // if sequence[start - end] doesn't contain p2[i]
+        if (std::find(sequence.begin() + start, sequence.begin() + end, p2.sequence[i]) == sequence.begin() + end) {
+            k %= child_sequence.size();
+            child_sequence[k] = p2.sequence[i];
+            k++;
+        }
+
+    // child sequence might not have 0 in first place
+    // rotate it right until it has
+    while (child_sequence.front() != 0)
+        std::rotate(child_sequence.rbegin(), child_sequence.rbegin() + 1, child_sequence.rend());
+
+    return tsp_path_solution(child_sequence);
 }
 
 void tsp_path_solution::mutate() {
-    int i = 1 + rand() % (sequence.size() - 1); // random sequence index
+    // indexes in range [1, |nodes| - 1]
+    int i = 1 + rand() % (sequence.size() - 1);
     int j;
     
     do {

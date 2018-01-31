@@ -19,10 +19,16 @@ private:
     
 public:
     /** Constructor 
-     * build a random feasible solution
-     * @param data instance data
+     * Builds a random feasible solution
+     * @param size The solution size
      */
     tsp_path_solution(int size);
+
+    /** Constructor 
+     * Builds a solution from given path
+     * @param path The path
+     */
+    tsp_path_solution(const std::vector<int>& path);
     
     /** 
      * Copy constructor
@@ -66,7 +72,7 @@ public:
 	/**
 	 * Creates a child from this solution reversing a substring
 	 */
-	tsp_path_solution crossover() const;
+	tsp_path_solution crossover(const tsp_path_solution& p2) const;
 	
 	/**
 	 * Mutates this solution

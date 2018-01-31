@@ -63,7 +63,7 @@ void tsp_population::new_generation(double ratio, double mut_chance) {
 	
 	// generating new solutions
 	for (int i = 0; i < n; i++) {
-	    tsp_path_solution sol = select().crossover();
+	    tsp_path_solution sol = select().crossover(select());
 	    if ((double)rand() / RAND_MAX < mut_chance)
 	        sol.mutate();
 	    new_solutions.push_back(sol);
