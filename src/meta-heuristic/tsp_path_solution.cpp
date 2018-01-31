@@ -114,14 +114,26 @@ tsp_path_solution tsp_path_solution::crossover(const tsp_path_solution& p2) cons
 //     return child;
 // }
 
+// 2-opt mutation
 void tsp_path_solution::mutate() {
-    // indexes in range [1, |nodes| - 1]
+    // generating 2 random indices
     int i = 1 + rand() % (sequence.size() - 1);
-    int j;
+    int j = 1 + rand() % (sequence.size() - 1);
+    if (j < i)
+        std::swap(i, j);
     
-    do {
-       j = 1 + rand() % (sequence.size() - 1);
-    } while (j == i);
-
-    iter_swap(sequence.begin() + i, sequence.begin() + j);
+    std::reverse(sequence.begin() + i, sequence.begin() + j);
 }
+
+// // swap mutation
+// void tsp_path_solution::mutate() {
+//     // indexes in range [1, |nodes| - 1]
+//     int i = 1 + rand() % (sequence.size() - 1);
+//     int j;
+    
+//     do {
+//        j = 1 + rand() % (sequence.size() - 1);
+//     } while (j == i);
+
+//     iter_swap(sequence.begin() + i, sequence.begin() + j);
+// }
