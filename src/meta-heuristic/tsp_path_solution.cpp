@@ -53,22 +53,15 @@ double tsp_path_solution::fitness() const {
 }
 
 tsp_path_solution tsp_path_solution::crossover() const {
-    tsp_path_solution child = *this;
+    tsp_path_solution child(*this);
     
-    // starting index and length of reverse
-    int k = 1 + rand() % (child.sequence.size() - 2);
-    int l = 1 + rand() % (child.sequence.size() - k - 1);
+    // generating 2 random indices
+    int i = 1 + rand() % (child.sequence.size() - 1);
+    int j = 1 + rand() % (child.sequence.size() - 1);
+    if (j < i)
+        std::swap(i, j);
     
-    std::reverse(child.sequence.begin() + k, child.sequence.begin() + k + l);
-    
-    // solution may be unfeasible, forcing them to be feasible
-    if (child.sequence.front() != child.sequence.back()) {
-        if (k == 0) // first node changed but not last
-            child.sequence.back() = child.sequence.front();
-        else // last node changed but not first
-            child.sequence.front() = child.sequence.back();
-    }
-    
+    std::reverse(child.sequence.begin() + i, child.sequence.begin() + j);
     return child;
 }
 
