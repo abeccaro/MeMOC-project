@@ -6,6 +6,7 @@
 #include "tsp_population.h"
 #include <algorithm>
 #include <iostream>
+#include <cmath>
 
 // solution comparer, used to sort solution by fitness (desc)
 struct solution_comparer {
@@ -51,9 +52,11 @@ void tsp_population::evaluate(const std::vector<std::vector<double> >& costs) {
 }
 
 const tsp_path_solution& tsp_population::select() const {
-    // TODO: make the choice proportional to fitness
-    double rnd = (double)rand() / RAND_MAX * solutions.size();
-    return solutions[rnd];
+    double random_double = (double)rand() / RAND_MAX;
+    // the higher the exponent the higher the probability of the index to be low
+    int index = (int) std::floor(solutions.size() * (std::pow(random_double, 2)));
+
+    return solutions[index];
 }
 
 void tsp_population::new_generation(double ratio, double mut_chance) {

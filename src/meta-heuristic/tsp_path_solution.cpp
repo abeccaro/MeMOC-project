@@ -100,6 +100,20 @@ tsp_path_solution tsp_path_solution::crossover(const tsp_path_solution& p2) cons
     return tsp_path_solution(child_sequence);
 }
 
+
+// tsp_path_solution tsp_path_solution::crossover() const {
+//     tsp_path_solution child(*this);
+    
+//     // generating 2 random indices
+//     int i = 1 + rand() % (child.sequence.size() - 1);
+//     int j = 1 + rand() % (child.sequence.size() - 1);
+//     if (j < i)
+//         std::swap(i, j);
+    
+//     std::reverse(child.sequence.begin() + i, child.sequence.begin() + j);
+//     return child;
+// }
+
 void tsp_path_solution::mutate() {
     // indexes in range [1, |nodes| - 1]
     int i = 1 + rand() % (sequence.size() - 1);
