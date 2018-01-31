@@ -1,10 +1,10 @@
 /**
-* @file tsp_solution.h
+* @file tsp_path_solution.h
 * @brief TSP solution definition
 */
 
-#ifndef TSPSOLUTION_H
-#define TSPSOLUTION_H
+#ifndef TSPPATHSOLUTION_H
+#define TSPPATHSOLUTION_H
 
 #include <vector>
 #include "../TSPData.h"
@@ -12,7 +12,7 @@
 /**
 * TSP Solution representation: ordered sequence of nodes (path representation)
 */
-class tsp_solution {
+class tsp_path_solution {
 private:
     std::vector<int> sequence;
     double fit;
@@ -22,13 +22,13 @@ public:
      * build a random feasible solution
      * @param data instance data
      */
-    tsp_solution(int size);
+    tsp_path_solution(int size);
     
     /** 
      * Copy constructor
      * @param sol Tsp solution to copy
      */
-    tsp_solution(const tsp_solution& sol);
+    tsp_path_solution(const tsp_path_solution& sol);
     
     /**
      * Prints solution
@@ -44,13 +44,13 @@ public:
      * Assignment operator
      * @param rhs The solution to assign
      */
-    tsp_solution& operator=(const tsp_solution& rhs);
+    tsp_path_solution& operator=(const tsp_path_solution& rhs);
     
     /** 
      * Output stream operator
      * @param sol The solution to output
      */
-    friend std::ostream& operator<<(std::ostream& os, const tsp_solution& sol);
+    friend std::ostream& operator<<(std::ostream& os, const tsp_path_solution& sol);
 
 	/**
 	 * Evaluate this solution fitness and updates value
@@ -66,7 +66,7 @@ public:
 	/**
 	 * Creates a child from this solution reversing a substring
 	 */
-	tsp_solution crossover() const;
+	tsp_path_solution crossover() const;
 	
 	/**
 	 * Mutates this solution

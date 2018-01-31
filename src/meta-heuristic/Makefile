@@ -2,7 +2,7 @@ CC = g++
 CPPFLAGS = -g -Wall -Wsign-compare -O2
 LDFLAGS =
 
-OBJ = main.o ../TSPData.o tsp_solution.o tsp_population.o
+OBJ = main.o ../TSPData.o tsp_path_solution.o tsp_population.o
 
 %.o: %.cpp
 		$(CC) $(CPPFLAGS) -c $^ -o $@

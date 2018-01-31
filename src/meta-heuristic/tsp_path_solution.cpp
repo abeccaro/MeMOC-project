@@ -1,40 +1,41 @@
 /**
-* @file tsp_solution.h
+* @file tsp_path_solution.h
 * @brief TSP solution implementation
 */
 
 #include <algorithm>
 #include <iostream>
-#include "tsp_solution.h"
+#include "tsp_path_solution.h"
 
-tsp_solution::tsp_solution(int size) : fit(TSPData::INFINITE) {
+tsp_path_solution::tsp_path_solution(int size) : fit(TSPData::INFINITE) {
     sequence.reserve(size + 1);
 
-    for (int i = 0; i < size; i++)
+    sequence.push_back(0);
+    for (int i = 1; i < size; i++)
         sequence.push_back(i);
-    std::random_shuffle(sequence.begin(), sequence.end());
+    std::random_shuffle(sequence.begin() + 1, sequence.end());
     
     sequence.push_back(sequence.front());
 }
 
-tsp_solution::tsp_solution(const tsp_solution& sol) : fit(sol.fit) {
+tsp_path_solution::tsp_path_solution(const tsp_path_solution& sol) : fit(sol.fit) {
     sequence.reserve(sol.size());
     for (int i = 0; i < sol.sequence.size(); i++)
         sequence.push_back(sol.sequence[i]);
 }
 
-std::ostream& operator<<(std::ostream& os, const tsp_solution& sol) {
+std::ostream& operator<<(std::ostream& os, const tsp_path_solution& sol) {
     os << "[ ";
     for (int i = 0; i < sol.sequence.size(); i++)
         os << sol.sequence[i] << " ";
 	return os << "] fit = " << sol.fit;
 }
 
-unsigned long tsp_solution::size() const {
+unsigned long tsp_path_solution::size() const {
     return sequence.size();
 }
 
-tsp_solution& tsp_solution::operator=(const tsp_solution& rhs) {
+tsp_path_solution& tsp_path_solution::operator=(const tsp_path_solution& rhs) {
     // Handle self-assignment:
     if (this == &rhs)
     	return *this;
@@ -45,23 +46,23 @@ tsp_solution& tsp_solution::operator=(const tsp_solution& rhs) {
     return *this;
 }
 
-void tsp_solution::evaluate(const std::vector<std::vector<double> >& costs) {
+void tsp_path_solution::evaluate(const std::vector<std::vector<double> >& costs) {
 	fit = 0;
 	
 	for (int i = 0; i < sequence.size() - 1; i++)
 		fit += costs[sequence[i]][sequence[i+1]];
 }
 
-double tsp_solution::fitness() const {
+double tsp_path_solution::fitness() const {
 	return fit;
 }
 
-tsp_solution tsp_solution::crossover() const {
-    tsp_solution child = *this;
+tsp_path_solution tsp_path_solution::crossover() const {
+    tsp_path_solution child = *this;
     
     // starting index and length of reverse
-    int k = (double) rand() / RAND_MAX * (child.sequence.size() - 1);
-    int l = (double) rand() / RAND_MAX * (child.sequence.size() - k) + 1;
+    int k = 1 + rand() % (child.sequence.size() - 2);
+    int l = 1 + rand() % (child.sequence.size() - k - 1);
     
     std::reverse(child.sequence.begin() + k, child.sequence.begin() + k + l);
     
@@ -76,8 +77,7 @@ tsp_solution tsp_solution::crossover() const {
     return child;
 }
 
-void tsp_solution::mutate() {
-    // indices in range [1, |nodes| - 1]
+void tsp_path_solution::mutate() {
     int i = 1 + rand() % (sequence.size() - 2); // random sequence index
     int j;
     
@@ -87,4 +87,3 @@ void tsp_solution::mutate() {
 
     iter_swap(sequence.begin() + i, sequence.begin() + j);
 }
-

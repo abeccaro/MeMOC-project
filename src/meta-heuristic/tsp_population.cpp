@@ -9,7 +9,7 @@
 
 // solution comparer, used to sort solution by fitness (desc)
 struct solution_comparer {
-    bool operator ()(const tsp_solution& a, const tsp_solution& b) const {
+    bool operator ()(const tsp_path_solution& a, const tsp_path_solution& b) const {
         return a.fitness() < b.fitness();
     }
 };
@@ -23,17 +23,17 @@ tsp_population::tsp_population(int sol_size, int size) {
 	solutions.reserve(size);
 	
 	for (int i = 0; i < size; i++)
-		solutions.push_back(tsp_solution(sol_size));
+		solutions.push_back(tsp_path_solution(sol_size));
 }
 
 unsigned long tsp_population::size() const {
 	return solutions.size();
 }
 
-const tsp_solution& tsp_population::operator[](unsigned long index) const {
+const tsp_path_solution& tsp_population::operator[](unsigned long index) const {
     return solutions[index];
 }
-tsp_solution& tsp_population::operator[](unsigned long index) {
+tsp_path_solution& tsp_population::operator[](unsigned long index) {
     return solutions[index];
 }
 
@@ -50,7 +50,7 @@ void tsp_population::evaluate(const std::vector<std::vector<double> >& costs) {
 	sort_solutions();
 }
 
-const tsp_solution& tsp_population::select() const {
+const tsp_path_solution& tsp_population::select() const {
     // TODO: make the choice proportional to fitness
     double rnd = (double)rand() / RAND_MAX * solutions.size();
     return solutions[rnd];
@@ -58,12 +58,12 @@ const tsp_solution& tsp_population::select() const {
 
 void tsp_population::new_generation(double ratio, double mut_chance) {
     int n = solutions.size() * (1 - ratio);
-	std::vector<tsp_solution> new_solutions;
+	std::vector<tsp_path_solution> new_solutions;
 	new_solutions.reserve(n);
 	
 	// generating new solutions
 	for (int i = 0; i < n; i++) {
-	    tsp_solution sol = select().crossover();
+	    tsp_path_solution sol = select().crossover();
 	    if ((double)rand() / RAND_MAX < mut_chance)
 	        sol.mutate();
 	    new_solutions.push_back(sol);

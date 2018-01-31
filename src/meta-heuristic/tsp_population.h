@@ -6,11 +6,11 @@
 #ifndef TSPPOPULATION_H
 #define TSPPOPULATION_H
 
-#include "tsp_solution.h"
+#include "tsp_path_solution.h"
 
 class tsp_population {
 private:
-	std::vector<tsp_solution> solutions;
+	std::vector<tsp_path_solution> solutions;
 	
 	/**
 	 * Sorts solutions by fitness
@@ -31,8 +31,8 @@ public:
     /**
      * Random access operator redefinitions
      */
-    const tsp_solution& operator[](unsigned long index) const;
-    tsp_solution& operator[](unsigned long index);
+    const tsp_path_solution& operator[](unsigned long index) const;
+    tsp_path_solution& operator[](unsigned long index);
     
     /** 
      * Output stream operator
@@ -48,7 +48,7 @@ public:
     /**
      * Selects one random solution with probabilities proportional to fitness
      */
-    const tsp_solution& select() const;
+    const tsp_path_solution& select() const;
     
     /**
      * Advance to next generation by selecting some parents, creating offsprings from them
