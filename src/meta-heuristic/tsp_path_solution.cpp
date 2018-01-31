@@ -14,15 +14,9 @@ tsp_path_solution::tsp_path_solution(int size) : fit(TSPData::INFINITE) {
     for (int i = 1; i < size; i++)
         sequence.push_back(i);
     std::random_shuffle(sequence.begin() + 1, sequence.end());
-    
-    sequence.push_back(sequence.front());
 }
 
-tsp_path_solution::tsp_path_solution(const tsp_path_solution& sol) : fit(sol.fit) {
-    sequence.reserve(sol.size());
-    for (int i = 0; i < sol.sequence.size(); i++)
-        sequence.push_back(sol.sequence[i]);
-}
+tsp_path_solution::tsp_path_solution(const tsp_path_solution& sol) : sequence(sol.sequence), fit(sol.fit) {}
 
 std::ostream& operator<<(std::ostream& os, const tsp_path_solution& sol) {
     os << "[ ";
@@ -40,9 +34,9 @@ tsp_path_solution& tsp_path_solution::operator=(const tsp_path_solution& rhs) {
     if (this == &rhs)
     	return *this;
     
-    for (int i = 0; i < sequence.size(); i++)
-        sequence[i] = rhs.sequence[i];
+    sequence = rhs.sequence;
     fit = rhs.fit;
+
     return *this;
 }
 
@@ -51,6 +45,7 @@ void tsp_path_solution::evaluate(const std::vector<std::vector<double> >& costs)
 	
 	for (int i = 0; i < sequence.size() - 1; i++)
 		fit += costs[sequence[i]][sequence[i+1]];
+    fit += costs[sequence.back()][sequence.front()];
 }
 
 double tsp_path_solution::fitness() const {
@@ -78,11 +73,11 @@ tsp_path_solution tsp_path_solution::crossover() const {
 }
 
 void tsp_path_solution::mutate() {
-    int i = 1 + rand() % (sequence.size() - 2); // random sequence index
+    int i = 1 + rand() % (sequence.size() - 1); // random sequence index
     int j;
     
     do {
-       j = 1 + rand() % (sequence.size() - 2);
+       j = 1 + rand() % (sequence.size() - 1);
     } while (j == i);
 
     iter_swap(sequence.begin() + i, sequence.begin() + j);
