@@ -8,7 +8,7 @@
 
 
 const int POPULATION_SIZE = 1000;
-const int GENERATIONS = 300;
+const int GENERATIONS = 500;
 const double SURVIVAL_RATIO = 0.1;
 const double MUTATION_CHANCE = 0.1;
 const int RESTARTS = 5;
