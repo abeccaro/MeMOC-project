@@ -2,6 +2,7 @@
 #include <vector>
 #include <cstdlib>
 #include <stdexcept>
+#include <sys/time.h>
 #include "../TSPData.h"
 #include "tsp_path_solution.h"
 #include "tsp_population.h"
@@ -24,10 +25,17 @@ int main (int argc, char const *argv[]) {
 	// setting random seed (different every second)
 	srand(time(0));
 
+        // start timer
+        struct timeval  tv1, tv2;
+        gettimeofday(&tv1, NULL);
+
+	// setting best cost to INFINITE with random solution (will be overriden)
 	tsp_path_solution best(data.size());
-	std::cout << "********** START **********" << std::endl;
+	
+	// starting restarts loop
+	std::cout << "********** START **********" << std::endl << std::endl;
 	for (int r = 0; r < RESTARTS; r++) {
-		std::cout << "Restart n. " << r << std::endl;
+		std::cout << "Restart n. " << r + 1 << std::endl;
 
 		// creating first gen random population
 		tsp_population pop(data.size(), POPULATION_SIZE);
@@ -52,11 +60,18 @@ int main (int argc, char const *argv[]) {
 		std::cout << pop[0] << std::endl << std::endl;
 	}
 	std::cout << "*********** END ***********" << std::endl;
-	std::cout << std::endl << "Best overall solution:" << std::endl << best << std::endl;
+
+	// stop timer
+    gettimeofday(&tv2, NULL);
+    double time = (double)(tv2.tv_sec+tv2.tv_usec*1e-6 - (tv1.tv_sec+tv1.tv_usec*1e-6));
+
+    // print results
+	std::cout << std::endl << "Best solution found:" << std::endl << best << std::endl;
 	std::cout << "Optimal value: " << data.optimum() << ", found: " << best.fitness();
 	if (data.optimum() == best.fitness())
 		std::cout << " (optimal solution)";
 	else
 		std::cout << " (" << 100 * (1 - data.optimum() / best.fitness()) << "% off optimal)";
 		std::cout << std::endl;
+    std::cout << "Calculation took " << time << " seconds" << std::endl << std::endl;
 }

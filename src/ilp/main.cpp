@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
+#include <sys/time.h>
 #include "cpxmacro.h"
 #include "../TSPData.h"
 
@@ -126,6 +127,10 @@ int main (int argc, char const *argv[]) {
 		    throw std::runtime_error("usage: ./main filename.dat");
 		TSPData data;
 		data.read(argv[1]);
+
+        // start timer
+        struct timeval  tv1, tv2;
+        gettimeofday(&tv1, NULL);
 		
 		// setup LP
 		std::cout << "Calculating..." << std::endl;
@@ -134,18 +139,23 @@ int main (int argc, char const *argv[]) {
 		// optimize
 		CHECKED_CPX_CALL( CPXmipopt, env, lp );
 		
-		// print
+		// stop timer
+        gettimeofday(&tv2, NULL);
+        double time = (double)(tv2.tv_sec+tv2.tv_usec*1e-6 - (tv1.tv_sec+tv1.tv_usec*1e-6));
+		
+		// print to std out
 		double objval;
 		CHECKED_CPX_CALL( CPXgetobjval, env, lp, &objval );
 		std::cout << std::endl << "Optimal objval: " << objval << std::endl;
+        std::cout << "Calculation took " << time << " seconds\n";
 		
+		// gets variables values
 		int n = CPXgetnumcols(env, lp);
 		if (n != 2 * data.size() * data.size())
 		    throw std::runtime_error(std::string(__FILE__) + ":" + STRINGIZE(__LINE__) + ": " + "different number of variables");
 	  	std::vector<double> varVals;
 		varVals.resize(n);
   		CHECKED_CPX_CALL( CPXgetx, env, lp, &varVals[0], 0, n - 1 );
-		/// status =      CPXgetx (env, lp, x          , 0, CPXgetnumcols(env, lp)-1);
   	  		
   	  	// output file.sol
 		CHECKED_CPX_CALL( CPXsolwrite, env, lp, "ilp.sol" );
