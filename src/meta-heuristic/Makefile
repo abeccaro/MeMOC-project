@@ -1,5 +1,5 @@
 CC = g++
-CPPFLAGS = -g -Wall -Wsign-compare -O2
+CPPFLAGS = -g -Wall -Wsign-compare -O2 -std=c++11 -pthread
 LDFLAGS =
 
 OBJ = main.o ../TSPData.o tsp_path_solution.o tsp_population.o
