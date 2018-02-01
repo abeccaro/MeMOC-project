@@ -7,24 +7,27 @@
 #define TSPPATHSOLUTION_H
 
 #include <vector>
-#include "../TSPData.h"
+#include "../tsp_data.h"
 
 /**
 * TSP Solution representation: ordered sequence of nodes (path representation)
 */
 class tsp_path_solution {
 private:
+    // ordered sequence of nodes
     std::vector<int> sequence;
+    
+    // fitness (= cost)
     double fit;
     
 public:
-    /** Constructor 
+    /**
      * Builds a random feasible solution
      * @param size The solution size
      */
     tsp_path_solution(int size);
 
-    /** Constructor 
+    /**
      * Builds a solution from given path
      * @param path The path
      */
@@ -35,11 +38,6 @@ public:
      * @param sol Tsp solution to copy
      */
     tsp_path_solution(const tsp_path_solution& sol);
-    
-    /**
-     * Prints solution
-     */
-    void print() const;
     
     /**
      * Returns solution size

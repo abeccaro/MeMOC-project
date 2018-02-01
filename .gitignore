@@ -2,3 +2,6 @@
 *.o
 main
 *.sol
+
+# instance data format readers
+instance_format_readers.txt

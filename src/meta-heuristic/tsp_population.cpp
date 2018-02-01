@@ -5,7 +5,6 @@
 
 #include "tsp_population.h"
 #include <algorithm>
-#include <iostream>
 #include <cmath>
 
 // solution comparer, used to sort solution by fitness (desc)
@@ -34,6 +33,7 @@ unsigned long tsp_population::size() const {
 const tsp_path_solution& tsp_population::operator[](unsigned long index) const {
     return solutions[index];
 }
+
 tsp_path_solution& tsp_population::operator[](unsigned long index) {
     return solutions[index];
 }
@@ -53,27 +53,26 @@ void tsp_population::evaluate(const std::vector<std::vector<double> >& costs) {
 
 const tsp_path_solution& tsp_population::select() const {
     double random_double = (double)rand() / RAND_MAX;
-    // the higher the exponent the higher the probability of the index to be low
+
+    // the higher the exponent the higher the probability of the random index to be low
     int index = (int) std::floor(solutions.size() * (std::pow(random_double, 2)));
 
     return solutions[index];
 }
 
 void tsp_population::new_generation(double ratio, double mut_chance) {
+	// n = number of new solutions to generate
     int n = solutions.size() * (1 - ratio);
-	std::vector<tsp_path_solution> new_solutions;
-	new_solutions.reserve(n);
 	
-	// generating new solutions
-	for (int i = 0; i < n; i++) {
+	for (int i = solutions.size() - n; i < solutions.size(); i++) {
+		// generate new solution
 	    tsp_path_solution sol = select().crossover(select());
+
+	    // mutation chance
 	    if ((double)rand() / RAND_MAX < mut_chance)
 	        sol.mutate();
-	    new_solutions.push_back(sol);
+
+	    // replace old solution with new one
+	    solutions[i] = sol;
 	}
-	
-	// replacing worst solutions with new ones
-	int start_replace = solutions.size() - n;
-	for (int i = 0; i < n; i++)
-	    solutions[start_replace + i] = new_solutions[i];
 }

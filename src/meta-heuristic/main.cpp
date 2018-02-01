@@ -1,26 +1,25 @@
 #include <iostream>
 #include <vector>
-#include <cstdlib>
 #include <stdexcept>
 #include <sys/time.h>
 #include <thread>
 #include <future>
-#include "../TSPData.h"
+#include "../tsp_data.h"
 #include "tsp_path_solution.h"
 #include "tsp_population.h"
 
 
-const int POPULATION_SIZE = 1000;
-const int GENERATIONS = 500;
-const double SURVIVAL_RATIO = 0.1;
-const double MUTATION_CHANCE = 0.1;
-const int POPULATIONS = 5;
+const int POPULATION_SIZE = 1000; // number of solutions in population
+const int GENERATIONS = 500; // number of generations to create before stopping
+const double SURVIVAL_RATIO = 0.1; // percentage of population that survives when a new one is created (elites)
+const double MUTATION_CHANCE = 0.1; // chance for a mutation to occur
+const int POPULATIONS = 5; // number of population to evaluate
 
 
 /**
  * Creates a new population, creates specified amount of generation and returns the best solution found
  */
-tsp_path_solution evaluate_random_population(const TSPData& data) {
+tsp_path_solution evaluate_random_population(const tsp_data& data) {
 	// creating first gen random population
 	tsp_population pop(data.size(), POPULATION_SIZE);
 	
@@ -39,12 +38,16 @@ tsp_path_solution evaluate_random_population(const TSPData& data) {
 
 
 int main (int argc, char const *argv[]) {
-	// reading data from input file
+	// throw error if input file not specified
 	if (argc < 2)
 	    throw std::runtime_error("usage: ./main data_filename.dat");
 
-	TSPData data;
+	// reading data from input file
+	tsp_data data;
 	data.read(argv[1]);
+
+	if (data.size() == 0)
+	    throw std::runtime_error("Instance data empty: file path incorrect or empty file");
 	
 	// setting random seed (different every second)
 	srand(time(0));

@@ -3,7 +3,7 @@
 #include <vector>
 #include <sys/time.h>
 #include "cpxmacro.h"
-#include "../TSPData.h"
+#include "../tsp_data.h"
 
 using namespace std;
 
@@ -13,7 +13,7 @@ const int NAME_SIZE = 512;
 char name[NAME_SIZE];
 
 
-void setupLP(CEnv env, Prob lp, const TSPData& data) {
+void setupLP(CEnv env, Prob lp, const tsp_data& data) {
     const int N = data.size();
     double C[N*N];
     for (int i = 0; i < N; i++)
@@ -125,7 +125,7 @@ int main (int argc, char const *argv[]) {
 		// read input data
 		if (argc < 2)
 		    throw std::runtime_error("usage: ./main filename.dat");
-		TSPData data;
+		tsp_data data;
 		data.read(argv[1]);
 
         // start timer

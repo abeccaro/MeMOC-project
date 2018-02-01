@@ -7,9 +7,11 @@
 #define TSPPOPULATION_H
 
 #include "tsp_path_solution.h"
+#include <ostream>
 
 class tsp_population {
 private:
+    // solutions vector
 	std::vector<tsp_path_solution> solutions;
 	
 	/**
