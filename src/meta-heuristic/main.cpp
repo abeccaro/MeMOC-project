@@ -53,4 +53,10 @@ int main (int argc, char const *argv[]) {
 	}
 	std::cout << "*********** END ***********" << std::endl;
 	std::cout << std::endl << "Best overall solution:" << std::endl << best << std::endl;
+	std::cout << "Optimal value: " << data.optimum() << ", found: " << best.fitness();
+	if (data.optimum() == best.fitness())
+		std::cout << " (optimal solution)";
+	else
+		std::cout << " (" << 100 * (1 - data.optimum() / best.fitness()) << "% off optimal)";
+		std::cout << std::endl;
 }

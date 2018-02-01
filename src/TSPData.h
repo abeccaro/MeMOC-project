@@ -3,8 +3,8 @@
  * @brief TSP data definition
  */
 
-#ifndef TSP_H
-#define TSP_H
+#ifndef TSPDATA_H
+#define TSPDATA_H
 
 #include <fstream>
 #include <vector>
@@ -15,6 +15,7 @@
 class TSPData {
 private:
     int n; //number of nodes
+    double opt; // optimal value for objective function
     std::vector<std::vector<double> > c; // costs
 
 public:
@@ -44,6 +45,13 @@ public:
      * Return costs matrix
      */
     std::vector<std::vector<double> > costs() const;
+
+    /**
+     * Returns optimal cost sum
+     */
+    double optimum() const {
+        return opt;
+    }
     
     /**
      * Return nodes count

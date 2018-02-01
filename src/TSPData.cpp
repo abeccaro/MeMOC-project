@@ -1,5 +1,5 @@
 /**
- * @file TSP.cpp
+ * @file TSPData.cpp
  * @brief TSP data implementation
  */
  
@@ -15,6 +15,7 @@ void TSPData::read(const char* filename) {
 
     // read size
     in >> n;
+    in >> opt;
 
     // read costs
     c.reserve(n);
