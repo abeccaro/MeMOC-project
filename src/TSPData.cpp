@@ -30,6 +30,37 @@ void TSPData::read(const char* filename) {
     in.close();
 }
 
+// // UPPER_ROW reader
+// void TSPData::read(const char* filename) {
+//     std::ifstream in(filename);
+
+//     // read size
+//     in >> n;
+
+//     // read costs
+//     c.reserve(n);
+//     for (int i = 0; i < n; i++)
+//         c.push_back(std::vector<double>(n));
+
+//     for (int i = 0; i < n; i++) {
+//         c[i][i] = 0;
+//         for (int j = i + 1; j < n; j++) {
+//             double cost;
+//             in >> cost;
+//             c[i][j] = cost;
+//             c[j][i] = cost;
+//         }
+//     }
+
+//     for (int i = 0; i < n; i++) {
+//         for (int j = 0; j < n; j++)
+//             std::cout << c[i][j] << " ";
+//         std::cout << std::endl;
+//     }
+
+//     in.close();
+// }
+
 int TSPData::size() const {
     return n;
 }
