@@ -23,7 +23,7 @@
 		This way the solutions with lower cost are more likely to be chosen than the others, but each solution might be selected.
 		
 	\subsection{Crossover}
-		The crossover operator used in the project is the Order Crossover (OX), that works like this:
+		The crossover operator takes a certain number of parents and creates an offspring that inherits parents properties. In the project was used the Order Crossover (OX), that from 2 parents creates one child, and works like this:
 		
 		\begin{figure}[h]
 		\includegraphics[width=0.6\textwidth]{ox_crossover}
@@ -52,3 +52,10 @@
 		
 	\subsection{Generational Replacement}
 		When a population advance to next generation we need to replace the old bad solutions with newly created offsprings. This is done by elitist, so only the best solutions are kept and all the others are replaced by new solutions. The percentage of survivors (and replaced solutions) is set by the parameter SURVIVAL\_RATIO.
+		
+	\subsection{Improvements}
+		After implementing all the elements of the algorithm and doing some basic tests I found out that the convergence was fast and after a few generations the solution was already quite good and it was rarely improved after. This means that algorithm was iterating through a lot of generation with very few improving solutions, so I decided to introduce random restarts reducing generations count and considering the best solution from all evaluated populations. This approach worked out well to find more reliably good solutions but slowed computation down. To make up for the loss in performance multithread has been used running genetic algorithm on many random starting populations in parallel. It is possible to control the amount of populations evaluated by setting the parameter POPULATIONS.
+		
+		Another thing that has been tested is to modify the mutation chance at runtime based on the number of non-improving generations, but this didn't lead to significative improvement of solutions.
+		
+		
