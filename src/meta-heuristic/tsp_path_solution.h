@@ -7,6 +7,7 @@
 #define TSPPATHSOLUTION_H
 
 #include <vector>
+#include <ostream>
 #include "../tsp_data.h"
 
 /**
