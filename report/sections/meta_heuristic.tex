@@ -1,2 +1,54 @@
-\section{Meta Heuristic: Genetic Algorithm}
-	TODO
+\section{Genetic Algorithm}
+	Genetic algorithms are a population based heuristic method that simulates nature's evolutionary system to evolve a starting population of random solutions to obtain very good (possibly optimal) solutions at the end of the process. To do this a random starting population is generated, then each solution is evaluated with a fitness function. After that some solutions, usually the best ones, are chosen to create offsprings that will replace worst solutions. This way the algorithm performs a sort of natural selection keeping the best solutions and improving them over generations.
+		
+	\subsection{Encoding}
+		To represent a TSP solution the path representation has been used, it consists in a sequence of $N$ nodes, where $N$ is the total number of nodes, sorted from the starting one to the last visited on encoded path.
+		
+		For example the path $0 \rightarrow 3 \rightarrow 1 \rightarrow 4 \rightarrow 2 \rightarrow 0$ is encoded as:
+		\[[0, 3, 1, 4, 2]\]
+	
+	\subsection{Fitness}
+		As fitness concerns I took a different approach from usual genetic algorithms and considered the sum of costs in path as the fitness and I will try to minimize it.
+		This choice was taken because other considered fitness functions had drawbacks, mainly because most of them were in the form $upperBound - costs$ but upper bounds are not so strict and then a proportional choice based on fitness would yield a very similar probability for each individual (because $maxFitness - minFitness$ is much lower than $upperBound - anyFitness$).
+		
+		By setting the fitness function equal to the sum of path costs it it directly proportional to objective function resulting in a more correct reward based on fitness.
+		
+	\subsection{Select}
+		The select operator is a little tricky because of the fact that solutions with lower fitness should have higher probabilities, so both Montecarlo and Linear ranking methods can't be used. N-Tournament is a valid alternative, but it was discarded because if a subset of $k$ solutions is chosen, the $k-1$ worst solutions are never used for crossover and this reduces (slightly) diversification.
+		
+		The final choice is a probability calculated based on position in an array of solutions sorted by fitness. The selected solution is the one with index
+		\[index = \left \lfloor{N * r^{2}}\right \rfloor\]
+		where N is the total number of nodes and r is a random number $\in [0, 1)$
+		
+		This way the solutions with lower cost are more likely to be chosen than the others, but each solution might be selected.
+		
+	\subsection{Crossover}
+		The crossover operator used in the project is the Order Crossover (OX), that works like this:
+		
+		\begin{figure}[h]
+		\includegraphics[width=0.6\textwidth]{ox_crossover}
+		\centering
+		\caption{Example of Order Crossover (OX)}
+		\end{figure}
+		
+		\begin{enumerate}
+			\item Select a random subsequence of consecutive alleles from parent 1. (underlined)
+			\item Drop the subsequence down to Child and mark out these alleles in Parent 2.
+			\item Starting on the right side of the subsequence, grab alleles from parent 2 and insert them in Child at the right edge of the subsequence. Since 8 is in that position in Parent 2, it is inserted into Child first at the right edge of the subsequence.\\
+				Notice that alleles 1, 2 and 3 are skipped because they are marked out and 4 is inserted into the 2nd spot in Child.
+		\end{enumerate}
+		
+	\subsection{Mutation}
+		Only one type of mutation is used and it is the 2-opt, an algorithm that takes a substring of the path representation and reverse it. The idea is to take a route that crosses over itself and reorder it so that it does not.
+		This is good for the main purpose of mutations (prevent genetic drift) as well as for improving solutions.
+		
+		\begin{figure}[h]
+		\includegraphics[width=0.5\textwidth]{2-opt}
+		\centering
+		\caption{Example of 2-opt mutation}
+		\end{figure}
+		
+		To control the mutation there is a parameter MUTATION\_CHANCE that sets the probability that this mutation happens.
+		
+	\subsection{Generational Replacement}
+		When a population advance to next generation we need to replace the old bad solutions with newly created offsprings. This is done by elitist, so only the best solutions are kept and all the others are replaced by new solutions. The percentage of survivors (and replaced solutions) is set by the parameter SURVIVAL\_RATIO.
