@@ -1,7 +1,7 @@
 \section{Genetic Algorithm}
 	Genetic algorithms are a population based heuristic method that simulates nature's evolutionary system to evolve a starting population of random solutions to obtain very good (possibly optimal) solutions at the end of the process. To do this a random starting population is generated, then each solution is evaluated with a fitness function. After that some solutions, usually the best ones, are chosen to create offsprings that will replace worst solutions. This way the algorithm performs a sort of natural selection keeping the best solutions and improving them over generations.
 	
-	As the problem is a variation of the popular Traveling Salesman Problem (TSP), it will be traded as such, so operators and solution representation are often the one used in literature for that problem.
+	As the problem is a variation of the popular Traveling Salesman Problem (TSP), it will be traded as such, so operators and solution representation are often the one used in literature for that problem. Also the important thing in the solution is the order of visited nodes, so crossover and mutations are order preserving, this means that they don't generate many new connections but try te keep connected the nodes that were already connected before.
 		
 	\subsection{Encoding}
 		To represent a TSP solution the path representation has been used, it consists in a sequence of $N$ nodes, where $N$ is the total number of nodes, sorted from the starting one to the last visited on encoded path.
