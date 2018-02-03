@@ -1,2 +1,6 @@
 \section{Conclusions}
-	TODO
+	A model solver like Cplex and an heuristic method have substantial differences in the goal they want to achieve: ILP solvers find optimal solutions verifying that it's optimal, while heuristic focus on computation time and find quickly a good solution, that might be optimal or not, without any guarantee about how good the solution actually is.
+	
+	From selected tests we can see that both approaches works well for small instances and find reliably the optimal solution. Increasing problem size will make Cplex solver slower and genetic algorithm find solutions more distant from optimal one.
+	
+	This project was interesting and made me understand that each method is more suited for a particular goal and has its pros and cons, depending on intrinsic characteristics, implementation of operators/parts of the algorithm and instances of problems. This means that there's no best method to solve some problems (like TSP and related), it all depends on the final solutions that we want to find.
