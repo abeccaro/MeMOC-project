@@ -1,4 +1,5 @@
 \section{Integer Linear Programming Model}
+	In this section will be presented the model implemented using cplex as solver.
 	\subsection{Network Flow Model Representation}
 		The problem can be represented on a complete weighted graph $G=(N, A)$ where $N$ is the set of nodes (holes on the board) and $A$ is the set of the arcs $(i, j), ∀ i, j ∈ N$ (trajectory of the drill moving from hole $i$ to hole $j$).To each arc will be associated a weight $c_{ij}$ that represents the time needed to move from starting hole to destination.\\
 		Using this representation the problem is equivalent to determine the minimum weight hamiltonian cycle on G, so it is like the very popular Travelling Salesman Problem (TSP).\\
@@ -43,7 +44,7 @@
 			\\
 			&x_{ij} ∈ \mathbb{Z}_{+} & ∀ (i, j) ∈ A\\
 			\\
-			&y_{ij} ∈ \{0, 1\} & ∀ (i, j) ∈ A\\
+			&y_{ij} ∈ \{0, 1\} & ∀ (i, j) ∈ A
 		\end{align*}
 
 		
