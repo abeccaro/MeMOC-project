@@ -18,10 +18,10 @@ tsp_path_solution::tsp_path_solution(const std::vector<int>& path) : sequence(pa
 tsp_path_solution::tsp_path_solution(const tsp_path_solution& sol) : sequence(sol.sequence), fit(sol.fit) {}
 
 std::ostream& operator<<(std::ostream& os, const tsp_path_solution& sol) {
-    os << "[ ";
+    os << "Cost = " << sol.fit << std::endl;
     for (int i = 0; i < sol.sequence.size(); i++)
-        os << sol.sequence[i] << " ";
-	return os << "] fit = " << sol.fit;
+        os << sol.sequence[i] << " -> ";
+    return os << sol.sequence.front();
 }
 
 unsigned long tsp_path_solution::size() const {

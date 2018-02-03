@@ -14,10 +14,6 @@ struct solution_comparer {
     }
 };
 
-void tsp_population::sort_solutions() {
-    std::sort(solutions.begin(), solutions.end(), solution_comparer());
-}
-
 
 tsp_population::tsp_population(int sol_size, int size) {
 	solutions.reserve(size);
@@ -48,7 +44,8 @@ void tsp_population::evaluate(const std::vector<std::vector<double> >& costs) {
 	for (int i = 0; i < solutions.size(); i++)
 		solutions[i].evaluate(costs);
 	
-	sort_solutions();
+	// sort solutions by fitness
+	std::sort(solutions.begin(), solutions.end(), solution_comparer());
 }
 
 const tsp_path_solution& tsp_population::select() const {

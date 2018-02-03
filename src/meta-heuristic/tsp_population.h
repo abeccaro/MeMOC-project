@@ -14,11 +14,6 @@ private:
     // solutions vector
 	std::vector<tsp_path_solution> solutions;
 	
-	/**
-	 * Sorts solutions by fitness
-	 */
-	void sort_solutions();
-	
 public:
     /**
      * Random population
