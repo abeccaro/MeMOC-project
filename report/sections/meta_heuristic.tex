@@ -8,6 +8,11 @@
 		
 		For example the path $0 \rightarrow 3 \rightarrow 1 \rightarrow 4 \rightarrow 2 \rightarrow 0$ is encoded as:
 		\[[0, 3, 1, 4, 2]\]
+		Note that there are some symmetries using this representation:
+		\begin{enumerate}
+			\item \textit{Rotation symmetries}: By rotating the path we obtain a solution that is equivalent but simply starts from a different node, e. g. [0,3,1,4,2] and [3,1,4,2,0]. These have been removed by fixing starting node to 0.
+			\item \textit{Direction symmetry}: By reversing all the elements but the first of a path we get a representation of the inverse path, e.g. [0,3,1,4,2] and [0,2,4,1,3]. Dealing with this symmetry is however not efficient and so it's not been removed.
+		\end{enumerate}
 	
 	\subsection{Fitness}
 		As fitness concerns I took a different approach from usual genetic algorithms and considered the sum of costs in path as the fitness and I will try to minimize it.
