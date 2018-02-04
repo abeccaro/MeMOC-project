@@ -1,0 +1,69 @@
+\section{Tests}
+	Tests have been taken from the ones used in laboratories and from TSPLIB, a library of sample instances for the TSP from various sources and of various types. A total of 13 instances, ranging in size from 12 to 100, have been tested 10 times for each method. Higher size tests should have been included but ILP solver already starts to slow at 100 nodes and the time to test was not so much.
+	
+	\subsection{ILP}
+		Results obtained testing the ILP solver gives expected results, as it always finds optimal solution, and execution times grow with problem size. Average solution times on 10 runs are displayed in Table 1.\\
+		
+		\begin{center}
+			\begin{tabular}{ | l | c | r | }
+				\hline
+				\multicolumn{1}{|c|}{Test} & Size & \multicolumn{1}{|c|}{Avg Time (s)}\\
+				\hline
+				tsp12.dat		& 12		& 0,133\\
+				tsp15.dat		& 15		& 0,062\\
+				tsp17.dat		& 17		& 0,162\\
+				tsp26.dat		& 26		& 0,298\\
+				tsp29a.dat		& 29		& 0,633\\
+				tsp29b.dat		& 29		& 0,668\\
+				tsp42.dat		& 42		& 2,462\\
+				tsp48a.dat		& 48		& 8,371\\
+				tsp48b.dat		& 48		& 10,357\\
+				tsp48c.dat		& 48		& 2,275\\
+				tsp60.dat		& 60		& 27,066\\
+				tsp100a.dat	& 100	& 101,527\\
+				tsp100b.dat	& 100	& 128,637\\
+				\hline
+			\end{tabular}
+		\end{center}
+		\captionof{table}{ILP tests results}
+		\vspace{1em}
+		We can see that while solving small instances is very efficient, bigger ones require more time and going from size 60 to 100 (5/3 ratio) it gets way slower (more than 5 times), and the trend continue growing in size. This is due to exponential growth of the solution space the solver has to explore to find and prove optimality.
+		
+	\subsection{Genetic Algorithm}
+		Genetic algorithms, due to their random nature, give different results at each execution, so an average of 10 runs is considered. Obtained solutions and computation time are also greatly related to set parameters, which are reported for each instance. Parameters don't differ so much, but more generations and bigger populations are used for bigger instances, and to keep computational times low populations evaluated are reduced. Results obtained with specified tests are reported in Table 2.
+		
+		\begin{center}
+			\hspace*{-1.2cm}
+			\begin{tabular}{ | l | c | r | r | c | c | c | c |}
+				\hline
+				\multicolumn{1}{|c}{\multirow{2}{*}{Test}} & \multicolumn{1}{|c|}{\multirow{2}{*}{Size}} & Average & Avg. opt. & Opt. & \multicolumn{3}{c|}{Parameters} \\
+				\cline{6-8}
+				& & \multicolumn{1}{c}{time} & \multicolumn{1}{|c|}{distance} & found & Populations & Pop. size & Generations\\
+				\hline
+				tsp12.dat		& 12		& 0,405	& 0,00\%	& 10/10	& 5	& 500	& 200\\
+				tsp15.dat		& 15		& 0,401	& 0,00\%	& 10/10	& 5	& 500	& 200\\
+				tsp17.dat		& 17		& 0,502	& 0,02\%	& 9/10	& 5	& 500	& 250\\
+				tsp26.dat		& 26		& 1,037	& 0,36\%	& 9/10	& 10	& 500	& 250\\
+				tsp29a.dat		& 29		& 1,038	& 0,68\%	& 2/10	& 10	& 500	& 250\\
+				tsp29b.dat		& 29		& 1,049	& 0,40\%	& 3/10	& 10	& 500	& 250\\
+				tsp42.dat		& 42		& 1,246	& 0,75\%	& 2/10	& 10	& 500	& 300\\
+				tsp48a.dat		& 48		& 1,779	& 2,30\%	& 0/10	& 7	& 1000	& 300\\
+				tsp48b.dat		& 48		& 1,777	& 1,65\%	& 0/10	& 7	& 1000	& 300\\
+				tsp48c.dat		& 48		& 1,859	& 2,91\%	& 0/10	& 7	& 1000	& 300\\
+				tsp60.dat		& 60		& 1,802	& 3,19\%	& 0/10	& 7	& 1000	& 300\\
+				tsp100a.dat	& 100	& 3,053	& 7,46\%	& 0/10	& 7	& 1000	& 500\\
+				tsp100b.dat	& 100	& 3,083	& 6,33\%	& 0/10	& 7	& 1000	& 500\\
+				\hline
+			\end{tabular}
+		\end{center}
+		\captionof{table}{Genetic algorithm tests results}
+		\vspace{1em}
+		Note that computation time is highly dependent on set parameters, so if time is less important parameters could be increased to get better solutions. A direct consequence is that with genetic algorithms it's possible to get the desired precision/efficiency ratio. However as GAs don't provide an optimality proof, if an optimal solution is found, all remaining computation is executed anyway.
+		
+		Another thing to consider is that, because of GAs random nature, solution effectiveness might vary a lot from run to run. This is however not the case as the solutions found, even in bigger instances, are not more than 2\% over the average. This means that implemented genetic algorithm is reliable even if random.
+		
+	\subsection{Tests details}
+		Here have been shown the most important results, all recorded data can be found in this spreadsheet:
+		
+		\href{https://docs.google.com/spreadsheets/d/1wJ98av-soxw_okteJ7X8zMJUfesh_16ECjA9uRbP8Hg/edit?usp=sharing}{\color{blue}{https://docs.google.com/spreadsheets/d/1wJ98av-soxw\_okteJ7X8zMJUfesh\_16ECjA9uRbP8Hg/edit?usp=sharing}}
+		

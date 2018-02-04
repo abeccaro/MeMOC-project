@@ -1,0 +1,11 @@
+\section{Abstract}
+	The project is composed by two parts:
+	\begin{itemize}
+		\item Implementing an Integer Linear Programming model with the Cplex API
+		\item Implementing a meta-heuristic solution method
+	\end{itemize}
+	For the second part my choice of method is a genetic algorithm, details on implementation and decisions in section 3.
+	Both solution methods will be applied to the following problem:
+	\blockquote{A company produces boards with holes used to build electric frames.  Boards are positioned over a machines and a drill moves over the board, stops at the desired positions and makes the holes.  Once a board is drilled, a new board is positioned and the process is iterated many times.  Given the position of the holes on the board, the company asks us to determine the hole sequence that minimizes the total drilling time, taking into account that the time needed for making an hole is the same and constant for all the holes.}
+	The two different approaches are then tested using some benchmark tests from literature and compared to spot differences in results (optimality, execution time, reliability, ...)
+	

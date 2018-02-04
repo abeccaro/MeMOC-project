@@ -1,0 +1,40 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{setspace} % line height
+\usepackage{fancyhdr} % header and footer customization
+\usepackage{hyperref} % link menu
+\usepackage{csquotes} % quotations
+\usepackage{scrextend} % text indentation
+\usepackage{amsmath} % formulas alignment
+\usepackage{amsfonts} % math symbols
+\usepackage{graphicx} % image insertion
+\usepackage{caption} % table captions in tabular environments
+\usepackage{multirow} % multiple row cells in tabular
+
+
+\graphicspath{ {images/} } %images path
+
+\pagestyle{fancy}
+\onehalfspacing
+
+% prevents red border around toc
+\hypersetup {
+  colorlinks = true,
+  linkcolor  = black
+}
+
+
+\begin{document}
+
+\include{front}
+\tableofcontents
+\include{sections/abstract}
+\include{sections/ilp_model}
+\include{sections/meta_heuristic}
+\include{sections/tests}
+\include{sections/conclusions}
+\include{sections/bibliography}
+
+\end{document}

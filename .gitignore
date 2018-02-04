@@ -3,5 +3,9 @@
 main
 *.sol
 
-# instance data format readers
-instance_format_readers.txt
+# latex files
+*.log
+*.aux
+*.out
+*.gz
+*.toc
